@@ -41,12 +41,18 @@ export default function RegisterPage() {
     const activeRole = formData.role || 'buyer';
     const fn = activeRole === 'vendor' ? registerVendor : registerBuyer;
     
+    // We now correctly await the backend database to actually create the user.
+    // InteractiveJourney will catch any errors and display them.
     const { data } = await fn(formData);
-    login(data.user, data.token);
     
+    // Once successful, save the token. InteractiveJourney will handle 
+    // the origami animation and navigation.
+    login(data.user, data.token);
+
+    // Give the origami animation time to cover the screen before redirecting
     setTimeout(() => {
         navigate(activeRole === 'vendor' ? '/dashboard' : '/');
-    }, 1500); 
+    }, 3000);
   };
 
   const TopContent = (

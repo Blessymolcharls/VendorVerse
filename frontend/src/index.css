@@ -1,6 +1,7 @@
-/* ===== Premium Dark Theme Variables ===== */
+/* ===== Premium Theme Variables ===== */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
+/* Default (Original Dark Theme) */
 :root {
   /* Core Colors */
   --bg-dark: #0a0a0a;
@@ -38,6 +39,34 @@
   font-family: 'Outfit', system-ui, -apple-system, sans-serif;
 }
 
+/* Light / Professional Theme */
+[data-theme="light"] {
+  /* Core Colors */
+  --bg-dark: #F9FAFB;
+  --bg-darker: #f3f4f6;
+  --bg-light: #ffffff;
+
+  /* Accents */
+  --primary: #4F46E5;
+  --primary-glow: rgba(79, 70, 229, 0.4);
+  --primary-hover: #4338ca;
+  --secondary: #7C3AED;
+  --accent: #10B981;
+
+  /* Text */
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --text-dark: #374151;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(79, 70, 229, 0.15);
+  --glass-highlight: rgba(79, 70, 229, 0.1);
+
+  /* UI Elements */
+  --border-subtle: #e5e7eb;
+}
+
 /* ===== Resets & Base ===== */
 * {
   box-sizing: border-box;
@@ -55,6 +84,7 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 ::selection {
@@ -185,8 +215,8 @@ a:hover {
 
 .btn-outline:hover {
   border-color: var(--primary);
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: var(--text-main);
+  color: var(--bg-dark);
 }
 
 .btn-sm {
@@ -320,7 +350,7 @@ a:hover {
 
 /* Navbar */
 .navbar {
-  background: rgba(10, 10, 10, 0.8);
+  background: var(--glass-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--glass-border);
@@ -346,7 +376,8 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #fff;
+  color: var(--text-main);
+  transition: color 0.3s ease;
 }
 
 .navbar-brand span {
@@ -363,11 +394,12 @@ a:hover {
 }
 
 .navbar-links a:not(.btn) {
-  color: var(--text-dark);
+  color: var(--text-main);
   font-weight: 500;
   position: relative;
   padding: 0.5rem 0;
   z-index: 200; /* Force above maps/grids */
+  transition: color 0.3s ease;
 }
 
 /* ===== Lun Dev Aerphone Slider (Exactly like Video) ===== */
@@ -586,7 +618,7 @@ a:hover {
 }
 
 .navbar-links a:not(.btn):hover {
-  color: #fff;
+  color: var(--primary);
 }
 
 .navbar-links a:not(.btn):hover::after {
@@ -1106,12 +1138,12 @@ a:hover {
 
 /* The UI Card sitting beside the dot */
 .map-bulletin-content {
-  background: rgba(10, 10, 10, 0.9);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   padding: 1.5rem;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  min-width: 320px;
+  border: 1px solid var(--glass-border);
+  min-width: 420px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
 }
@@ -1124,15 +1156,13 @@ a:hover {
 .map-bulletin-content h2 {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
-  color: #fff;
-  background: linear-gradient(135deg, #fff 0%, #e5e5e5 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-main);
+  background: none;
+  -webkit-text-fill-color: initial;
 }
 
 .map-bulletin-content p.prompt {
-  color: rgba(255,255,255,0.6);
+  color: var(--text-muted);
   font-size: 0.9rem;
   margin-bottom: 1.2rem;
 }
@@ -1142,9 +1172,9 @@ a:hover {
   font-size: 1.1rem;
   padding: 0.8rem 1.2rem;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: var(--bg-dark);
+  border: 2px solid var(--glass-border);
+  color: var(--text-main);
   transition: all 0.3s ease;
   margin-bottom: 1rem;
 }
@@ -1152,7 +1182,7 @@ a:hover {
 .journey-input:focus {
   outline: none;
   border-color: var(--primary);
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-dark);
 }
 
 .journey-next-btn {
@@ -1206,5 +1236,92 @@ a:hover {
 
   .page {
     padding: 1.5rem 1rem;
+  }
+}
+/* ===== Login Success Unfold Animation ===== */
+.unfold-plane {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  background: var(--bg-dark); 
+  z-index: 9999;
+  /* Starts as a rough triangle shape representing the collapsed plane */
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  animation: planeUnfold 1.5s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+  box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+}
+
+.unfold-plane::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  opacity: 0.1;
+}
+
+@keyframes planeUnfold {
+  0% {
+    width: 40px;
+    height: 40px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  }
+  40% {
+    width: 300px;
+    height: 300px;
+    transform: translate(-50%, -50%) rotate(0deg);
+    /* Morphing into a square "sheet of paper" */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    border-radius: 16px;
+    background: var(--bg-light); 
+  }
+  100% {
+    width: 200vw;
+    height: 200vh;
+    transform: translate(-50%, -50%) rotate(0deg);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    border-radius: 0;
+    /* Fills the screen with the background color matching the next page */
+    background: var(--bg-dark); 
+  }
+}
+
+.interactive-journey-container.unfolding .map-nodes-layer,
+.interactive-journey-container.unfolding .journey-plane-dynamic {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* ===== Hyperbolic Takeoff Flight ===== */
+.plane-takeoff {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 1000 !important;
+  
+  /* 
+    A smooth, continuous curve from the bottom-left area, 
+    sweeping gracefully up into the direct center.
+  */
+  offset-path: path("M 300 800 Q 500 700, 50vw 50vh") !important;
+  offset-rotate: auto !important;
+  animation: hyperbolicFlight 1s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+}
+
+@keyframes hyperbolicFlight {
+  0% {
+    offset-distance: 0%;
+    transform: scale(1);
+    opacity: 1;
+  }
+  99% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    transform: scale(1.5);
+    opacity: 0; /* Vanishes exactly as origami appears */
   }
 }

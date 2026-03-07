@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import OrigamiUnfold from './OrigamiUnfold';
 
 /**
  * InteractiveJourney
@@ -14,7 +15,8 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [isSuccess, setIsSuccess] = useState(false); // Triggers unfold
+  const [isSuccess, setIsSuccess] = useState(false); // Triggers flight
+  const [showOrigami, setShowOrigami] = useState(false); // Triggers 3D unfold 1s later
   
   const [dimensions, setDimensions] = useState({ width: 1200, height: 800 });
   const inputRef = useRef(null);
@@ -117,6 +119,12 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
       planeProgress = 50;
   }
 
+  useEffect(() => {
+      if (isSuccess && !showOrigami) {
+          setShowOrigami(true);
+      }
+  }, [isSuccess, showOrigami]);
+
   return (
     <div ref={containerRef} className={`interactive-journey-container ${isSuccess ? 'unfolding' : ''}`} style={{ overflowY: 'auto', overflowX: 'hidden', minHeight: '100vh', scrollBehavior: 'smooth' }}>
       
@@ -126,8 +134,8 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
             {pathStr && <path d={pathStr} fill="none" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="3" strokeDasharray="10 10" strokeLinecap="round" />}
         </svg>
 
-      {/* The HTML Paper Airplane (Animated via CSS offset-path, correctly sized and layered) */}
-      {!isSuccess && (
+      {/* The HTML Paper Airplane. Dynamically tracks path until success. */}
+      {!showOrigami && (
         <div
           className="journey-plane-dynamic"
           style={{ 
@@ -140,7 +148,7 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
               width: '40px',
               height: '40px',
               zIndex: 100,
-              transition: 'offset-distance 1s cubic-bezier(0.4, 0, 0.2, 1)'
+              transition: 'offset-distance 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
           }}
         >
             <svg viewBox="0 0 24 24" style={{ width: '100%', height: '100%', transform: 'rotate(45deg)', filter: 'drop-shadow(0 0 10px rgba(163, 163, 163,0.8))' }}>
@@ -160,12 +168,10 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
         </div>
       )}
 
+
+
       {/* Success Unfold Animation Element */}
-      {isSuccess && (
-          <div className="unfold-plane">
-             <div className="unfold-inner"></div>
-          </div>
-      )}
+      <OrigamiUnfold isSuccess={showOrigami} />
 
       <div className="map-nodes-layer" style={{ height: `${totalMapHeight}px` }}>
           {topContent && <div className="journey-top-content">{topContent}</div>}

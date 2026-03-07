@@ -16,13 +16,16 @@ export default function LoginPage() {
   const handleLoginSubmit = async (formData) => {
     const activeRole = formData.role || 'buyer';
     const fn = activeRole === 'vendor' ? loginVendor : loginBuyer;
+    
+    // Accurately await the database response. InteractiveJourney will catch errors.
     const { data } = await fn({ email: formData.email, password: formData.password });
+    
     login(data.user, data.token);
     
-    // We delay the navigation slightly to allow the "unfold" animation to play out
+    // We delay the navigation to allow the 1s flight    // Give animation time to play
     setTimeout(() => {
         navigate(activeRole === 'vendor' ? '/dashboard' : '/');
-    }, 1500); 
+    }, 3000);
   };
 
   const TopContent = (

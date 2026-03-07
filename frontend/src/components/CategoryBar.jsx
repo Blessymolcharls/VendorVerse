@@ -17,8 +17,6 @@ export default function CategoryBar({ selectedCategory, onSelectCategory }) {
       });
   }, []);
 
-  if (categories.length === 0) return null;
-
   return (
     <div className="category-bar-container">
       <div className="category-bar">

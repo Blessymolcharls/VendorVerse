@@ -1,0 +1,40 @@
+STDOUT: 
+> vendorverse-backend@1.0.0 dev
+> nodemon server.js
+
+
+STDOUT: [33m[nodemon] 3.1.14[39m
+
+STDOUT: [33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+
+STDOUT: [32m[nodemon] starting `node server.js`[39m
+
+STDOUT: MongoDB connected
+
+STDERR: node:events:486
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::5000
+    at Server.setupListenHandle [as _listen2] (node:net:1948:16)
+    at listenInCluster (node:net:2005:12)
+    at Server.listen (node:net:2110:7)
+    at app.listen (C:\Users\Samerath Kumar\OneDrive\Desktop\Code\VendorVerse-sub1\backend\node_modules\express\lib\application.js:635:24)
+    at C:\Users\Samerath Kumar\OneDrive\Desktop\Code\VendorVerse-sub1\backend\server.js:30:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1984:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 5000
+}
+
+Node.js v24.14.0
+
+STDOUT: [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+

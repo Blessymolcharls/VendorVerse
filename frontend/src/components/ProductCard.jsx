@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 const StarRow = ({ score }) => (
   <span className='stars'>
@@ -12,6 +13,7 @@ const StarRow = ({ score }) => (
 
 export default function ProductCard({ product }) {
   const { _id, name, price, images, vendor, tags, stock, unit } = product;
+  const { addToCart } = useCart();
 
   return (
     <div className='card' style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -75,20 +77,38 @@ export default function ProductCard({ product }) {
         </div>
       )}
 
-      {/* Vendor */}
-      {vendor && (
-        <Link
-          to={`/vendors/${vendor._id}`}
-          style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: 'auto' }}
+      {/* Vendor & Action */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto' }}>
+        {vendor && (
+          <Link
+            to={`/vendors/${vendor._id}`}
+            style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}
+          >
+            🏪 {vendor.businessName}
+            {vendor.averageRating > 0 && (
+              <span style={{ marginLeft: 6, color: 'var(--text-main)' }}>
+                ★ {vendor.averageRating}
+              </span>
+            )}
+          </Link>
+        )}
+        
+        <button 
+          className="btn btn-primary btn-sm"
+          style={{ padding: '0.4rem 0.8rem', borderRadius: '20px', fontSize: '0.85rem' }}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            addToCart(product);
+          }}
+          disabled={typeof stock === 'number' && stock <= 0}
         >
-          🏪 {vendor.businessName}
-          {vendor.averageRating > 0 && (
-            <span style={{ marginLeft: 6, color: '#e5e5e5' }}>
-              ★ {vendor.averageRating}
-            </span>
-          )}
-        </Link>
-      )}
+          <svg style={{ width: '16px', height: '16px' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          Add
+        </button>
+      </div>
     </div>
   );
 }
