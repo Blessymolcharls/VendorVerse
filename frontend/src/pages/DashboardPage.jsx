@@ -54,7 +54,7 @@ export default function DashboardPage() {
               <div style={{ fontWeight: 700 }}>{vendor?.businessName}</div>
               <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{user?.email}</div>
               {vendor?.averageRating > 0 && (
-                <div style={{ color: '#fbbf24', fontWeight: 700, marginTop: 4 }}>
+                <div style={{ color: '#e5e5e5', fontWeight: 700, marginTop: 4 }}>
                   ★ {vendor.averageRating} ({vendor.totalRatings} reviews)
                 </div>
               )}

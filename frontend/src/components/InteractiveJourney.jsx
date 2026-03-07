@@ -123,7 +123,7 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
       <div style={{ position: 'relative', width: '100%', height: `${totalMapHeight}px` }}>
         {/* Background SVG Curve completely mathematically generated */}
         <svg className="journey-curve-svg" style={{ zIndex: 1, pointerEvents: 'none', position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-            {pathStr && <path d={pathStr} fill="none" stroke="rgba(139, 92, 246, 0.3)" strokeWidth="3" strokeDasharray="10 10" strokeLinecap="round" />}
+            {pathStr && <path d={pathStr} fill="none" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="3" strokeDasharray="10 10" strokeLinecap="round" />}
         </svg>
 
       {/* The HTML Paper Airplane (Animated via CSS offset-path, correctly sized and layered) */}
@@ -143,17 +143,17 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
               transition: 'offset-distance 1s cubic-bezier(0.4, 0, 0.2, 1)'
           }}
         >
-            <svg viewBox="0 0 24 24" style={{ width: '100%', height: '100%', transform: 'rotate(45deg)', filter: 'drop-shadow(0 0 10px rgba(236,72,153,0.8))' }}>
+            <svg viewBox="0 0 24 24" style={{ width: '100%', height: '100%', transform: 'rotate(45deg)', filter: 'drop-shadow(0 0 10px rgba(163, 163, 163,0.8))' }}>
                 <path d="M22 2L11 13" stroke="url(#plane-grad0)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M22 2L15 22L11 13L2 9L22 2Z" fill="url(#plane-grad1)" stroke="url(#plane-grad1)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                 <defs>
                     <linearGradient id="plane-grad0" x1="11" y1="13" x2="22" y2="2" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#A78BFA" />
+                        <stop stopColor="#e5e5e5" />
                         <stop offset="1" stopColor="#F472B6" />
                     </linearGradient>
                     <linearGradient id="plane-grad1" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="rgba(139, 92, 246, 0.9)" />
-                        <stop offset="1" stopColor="rgba(236, 72, 153, 0.9)" />
+                        <stop stopColor="rgba(255, 255, 255, 0.9)" />
+                        <stop offset="1" stopColor="rgba(163, 163, 163, 0.9)" />
                     </linearGradient>
                 </defs>
             </svg>
@@ -196,21 +196,21 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
                           ) : (
                               /* Active Step View */
                               <>
-                                  {isActive && error && <div className="alert alert-error" style={{ marginBottom: '1rem', background: 'rgba(239, 68, 68, 0.2)', padding: '0.5rem', fontSize: '0.9rem' }}>{error}</div>}
+                                  {isActive && error && <div className="alert alert-error" style={{ marginBottom: '1rem', background: 'rgba(115, 115, 115, 0.2)', padding: '0.5rem', fontSize: '0.9rem' }}>{error}</div>}
                                   
                                   {step.type === 'role-selection' ? (
                                       <div style={{ display: 'flex', gap: '1rem', width: '100%', marginTop: '1rem' }}>
                                           <button
                                               onClick={() => { setFormData({...formData, [step.id]: 'buyer'}); setTimeout(() => handleNext(), 100); }}
                                               className="btn btn-primary journey-next-btn"
-                                              style={{ flex: 1, fontSize: '1rem', padding: '1rem', background: 'rgba(139, 92, 246, 0.2)', border: '2px solid var(--primary)' }}
+                                              style={{ flex: 1, fontSize: '1rem', padding: '1rem', background: 'rgba(255, 255, 255, 0.2)', border: '2px solid var(--primary)' }}
                                           >
                                               🛒 Buyer
                                           </button>
                                           <button
                                               onClick={() => { setFormData({...formData, [step.id]: 'vendor'}); setTimeout(() => handleNext(), 100); }}
                                               className="btn btn-primary journey-next-btn"
-                                              style={{ flex: 1, fontSize: '1rem', padding: '1rem', background: 'rgba(236, 72, 153, 0.2)', border: '2px solid var(--secondary)' }}
+                                              style={{ flex: 1, fontSize: '1rem', padding: '1rem', background: 'rgba(163, 163, 163, 0.2)', border: '2px solid var(--secondary)' }}
                                           >
                                               🏪 Vendor
                                           </button>

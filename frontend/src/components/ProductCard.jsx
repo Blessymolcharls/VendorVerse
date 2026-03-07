@@ -56,7 +56,7 @@ export default function ProductCard({ product }) {
         <span
           style={{
             fontSize: '0.8rem',
-            color: stock > 0 ? '#34d399' : '#f87171',
+            color: stock > 0 ? '#ffffff' : '#737373',
             fontWeight: 600,
           }}
         >
@@ -83,7 +83,7 @@ export default function ProductCard({ product }) {
         >
           🏪 {vendor.businessName}
           {vendor.averageRating > 0 && (
-            <span style={{ marginLeft: 6, color: '#fbbf24' }}>
+            <span style={{ marginLeft: 6, color: '#e5e5e5' }}>
               ★ {vendor.averageRating}
             </span>
           )}

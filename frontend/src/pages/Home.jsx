@@ -72,12 +72,12 @@ export default function Home() {
         {/* Decorative glowing orbs */}
         <div style={{
           position: 'absolute', top: '-50%', left: '-10%', width: '50%', height: '200%',
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 60%)',
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 60%)',
           zIndex: 0
         }} />
         <div style={{
           position: 'absolute', bottom: '-50%', right: '-10%', width: '40%', height: '200%',
-          background: 'radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, transparent 60%)',
+          background: 'radial-gradient(circle, rgba(163, 163, 163, 0.15) 0%, transparent 60%)',
           zIndex: 0
         }} />
 

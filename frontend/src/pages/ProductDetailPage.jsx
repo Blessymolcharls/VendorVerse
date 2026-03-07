@@ -79,7 +79,7 @@ export default function ProductDetailPage() {
 
           {/* Availability */}
           <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', fontSize: '0.9rem' }}>
-            <span style={{ color: isAvailable && stock > 0 ? '#34d399' : '#f87171', fontWeight: 600 }}>
+            <span style={{ color: isAvailable && stock > 0 ? '#ffffff' : '#737373', fontWeight: 600 }}>
               {isAvailable && stock > 0 ? `✓ In Stock (${stock} units)` : '✗ Out of Stock'}
             </span>
             {minOrderQty > 1 && (
@@ -104,7 +104,7 @@ export default function ProductDetailPage() {
                 <div>
                   <div style={{ fontWeight: 700, color: 'var(--text-main)' }}>{vendor.businessName}</div>
                   {vendor.averageRating > 0 && (
-                    <div style={{ color: '#fbbf24', fontSize: '0.85rem' }}>
+                    <div style={{ color: '#e5e5e5', fontSize: '0.85rem' }}>
                       ★ {vendor.averageRating} · {vendor.totalRatings} reviews
                     </div>
                   )}

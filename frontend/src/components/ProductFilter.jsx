@@ -32,8 +32,8 @@ export default function ProductFilter({ onFilter }) {
           transition: 'all 0.3s ease',
         }}
         onFocus={(e) => {
-          e.currentTarget.style.borderColor = '#8b5cf6';
-          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(139, 92, 246, 0.2)';
+          e.currentTarget.style.borderColor = '#ffffff';
+          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(255, 255, 255, 0.2)';
         }}
         onBlur={(e) => {
           e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
@@ -78,7 +78,7 @@ export default function ProductFilter({ onFilter }) {
                 borderRadius: '50%',
                 transition: 'color 0.2s'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.color = '#ef4444'}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#737373'}
               onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
             >
               <svg style={{ width: '18px', height: '18px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

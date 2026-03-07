@@ -67,15 +67,15 @@ export default function AuthJourneyMap({ steps, activeStepId }) {
       >
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M22 2L11 13" stroke="url(#paint0_linear_map)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="url(#paint1_linear_map)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="rgba(139, 92, 246, 0.4)"/>
+          <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="url(#paint1_linear_map)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="rgba(255, 255, 255, 0.4)"/>
           <defs>
             <linearGradient id="paint0_linear_map" x1="11" y1="13" x2="22" y2="2" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#A78BFA" />
+              <stop stopColor="#e5e5e5" />
               <stop offset="1" stopColor="#F472B6" />
             </linearGradient>
             <linearGradient id="paint1_linear_map" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#8B5CF6" />
-              <stop offset="1" stopColor="#EC4899" />
+              <stop stopColor="#ffffff" />
+              <stop offset="1" stopColor="#a3a3a3" />
             </linearGradient>
           </defs>
         </svg>
