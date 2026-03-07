@@ -30,7 +30,7 @@ export default function LoginPage() {
 
   const TopContent = (
     <div style={{ position: 'absolute', top: '-1rem', right: '0' }}>
-      <Link to="/register" style={{ padding: '0.5rem 1rem', color: 'var(--secondary)', textDecoration: 'none', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', fontWeight: 600 }}>
+      <Link to="/register" style={{ padding: '0.5rem 1rem', color: 'var(--text-main)', textDecoration: 'none', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', borderRadius: '8px', border: '1px solid var(--glass-border)', fontWeight: 600 }}>
           Create an Account
       </Link>
     </div>

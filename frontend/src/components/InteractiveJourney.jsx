@@ -131,7 +131,7 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
       <div style={{ position: 'relative', width: '100%', height: `${totalMapHeight}px` }}>
         {/* Background SVG Curve completely mathematically generated */}
         <svg className="journey-curve-svg" style={{ zIndex: 1, pointerEvents: 'none', position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-            {pathStr && <path d={pathStr} fill="none" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="3" strokeDasharray="10 10" strokeLinecap="round" />}
+            {pathStr && <path d={pathStr} fill="none" stroke="var(--text-muted)" strokeWidth="3" strokeDasharray="10 10" strokeLinecap="round" />}
         </svg>
 
       {/* The HTML Paper Airplane. Dynamically tracks path until success. */}
@@ -209,14 +209,14 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
                                           <button
                                               onClick={() => { setFormData({...formData, [step.id]: 'buyer'}); setTimeout(() => handleNext(), 100); }}
                                               className="btn btn-primary journey-next-btn"
-                                              style={{ flex: 1, fontSize: '1rem', padding: '1rem', background: 'rgba(255, 255, 255, 0.2)', border: '2px solid var(--primary)' }}
+                                              style={{ flex: 1, fontSize: '1rem', padding: '1rem', background: 'var(--bg-dark)', border: '2px solid var(--primary)', color: 'var(--text-main)' }}
                                           >
                                               🛒 Buyer
                                           </button>
                                           <button
                                               onClick={() => { setFormData({...formData, [step.id]: 'vendor'}); setTimeout(() => handleNext(), 100); }}
-                                              className="btn btn-primary journey-next-btn"
-                                              style={{ flex: 1, fontSize: '1rem', padding: '1rem', background: 'rgba(163, 163, 163, 0.2)', border: '2px solid var(--secondary)' }}
+                                              className="btn btn-outline journey-next-btn"
+                                              style={{ flex: 1, fontSize: '1rem', padding: '1rem', background: 'var(--bg-dark)', border: '2px solid var(--secondary)', color: 'var(--text-main)' }}
                                           >
                                               🏪 Vendor
                                           </button>
@@ -252,13 +252,13 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
                                                   disabled={!isActive}
                                               />
                                           )}
-                                          <button onClick={handleNext} disabled={loading || !isActive} className="btn btn-primary" style={{ padding: '0 1.5rem', height: step.type === 'textarea' ? '48px' : 'auto', alignSelf: step.type === 'textarea' ? 'flex-end' : 'stretch' }}>
+                                          <button onClick={handleNext} disabled={loading || !isActive} className="btn btn-primary" style={{ padding: '0 1.5rem', height: step.type === 'textarea' ? 'auto' : 'auto', minHeight: '48px', alignSelf: step.type === 'textarea' ? 'flex-end' : 'stretch' }}>
                                               {index === stepsArr.length - 1 ? (loading ? 'Wait...' : ctaText) : "➔"}
                                           </button>
                                       </div>
                                   )}
                                   
-                                  {step.type !== 'role-selection' && isActive && <p className="hint-text" style={{ marginTop: '0.5rem', marginBottom: 0 }}>Press <strong>Enter</strong> to continue</p>}
+                                  {step.type !== 'role-selection' && isActive && <p className="hint-text" style={{ marginTop: '0.5rem', marginBottom: 0, color: 'var(--text-muted)' }}>Press <strong style={{color: 'var(--text-main)'}}>Enter</strong> to continue</p>}
                               </>
                           )}
                       </div>

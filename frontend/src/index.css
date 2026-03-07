@@ -319,7 +319,7 @@ a:hover {
 .form-group textarea,
 .form-group select {
   padding: 0.8rem 1.2rem;
-  background: rgba(10, 10, 10, 0.6);
+  background: var(--bg-darker);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   font-family: inherit;
@@ -339,8 +339,8 @@ a:hover {
 .form-group textarea:focus,
 .form-group select:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
-  background: rgba(10, 10, 10, 0.8);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+  background: var(--bg-darker);
 }
 
 .form-group textarea {
@@ -1070,7 +1070,7 @@ a:hover {
   height: 24px;
   border-radius: 50%;
   background: var(--bg-dark);
-  border: 4px solid rgba(255, 255, 255, 0.3);
+  border: 4px solid var(--text-muted);
   box-shadow: 0 0 15px rgba(0,0,0,0.5);
   transition: all 0.3s ease;
   z-index: 5;
@@ -1117,7 +1117,7 @@ a:hover {
   height: 24px;
   border-radius: 50%;
   background: var(--bg-dark);
-  border: 4px solid rgba(255, 255, 255, 0.3);
+  border: 4px solid var(--text-muted);
   position: relative;
   box-shadow: 0 0 15px rgba(0,0,0,0.5);
   transition: all 0.3s ease;
@@ -1127,7 +1127,7 @@ a:hover {
 
 .map-bulletin-wrapper.active .map-bulletin-marker {
   border-color: var(--primary);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 20px var(--primary-glow);
   transform: translate(-50%, -50%) scale(1.2);
 }
 
