@@ -370,146 +370,207 @@ a:hover {
   z-index: 200; /* Force above maps/grids */
 }
 
-/* ===== Blur Carousel Slider (Lun Dev Effect) ===== */
-.blur-carousel-wrapper {
+/* ===== Lun Dev Aerphone Slider (Exactly like Video) ===== */
+.lun-slider-container {
   width: 100%;
-  margin: 2rem 0;
-  overflow: visible; /* Allowing scaled items to pop out */
+  height: 450px;
   position: relative;
-  z-index: 50;
-  /* Entrance animation */
-  animation: fadeSlideDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes fadeSlideDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.blur-carousel-scroller {
-  display: flex;
-  gap: 1.5rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding: 2rem 1rem;
-  /* Hide scrollbar */
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.blur-carousel-scroller::-webkit-scrollbar {
-  display: none;
-}
-
-.blur-carousel-item {
-  flex: 0 0 calc(25% - 1.5rem);
-  min-width: 250px;
-  position: relative;
-  border-radius: 20px;
   overflow: hidden;
-  scroll-snap-align: center;
-  /* The core interaction transitions */
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  margin: 1rem 0;
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+  animation: slideInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.lun-slider-list {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lun-slider-item {
+  position: absolute;
+  width: 240px;
+  height: 320px;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-md);
-  /* default state when nothing hovered */
-  transform: scale(1);
-  filter: blur(0px);
-  opacity: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-/* The magic: when an item is hovered, it pops out */
-.blur-carousel-item.active {
-  transform: scale(1.1) translateY(-10px);
-  z-index: 10;
-  box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.3);
-  border-color: rgba(139, 92, 246, 0.5);
-}
-
-/* The magic: when a SIBLING is hovered, THIS item pushes back and blurs */
-.blur-carousel-item.blurred {
-  transform: scale(0.9);
-  filter: blur(5px);
-  opacity: 0.6;
-  z-index: 1;
-}
-
-.blur-carousel-image-container {
+.lun-slider-image {
   width: 100%;
-  height: 200px;
+  height: 100%;
   position: relative;
   overflow: hidden;
 }
 
-.blur-carousel-image {
+.lun-slider-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s ease;
+  transition: transform 0.6s ease;
 }
 
-.blur-carousel-item.active .blur-carousel-image {
-  transform: scale(1.1);
+/* Nth-child logic for the impressive stacking & blur */
+/* Item 1: Hidden Far Left */
+.lun-slider-item:nth-child(1) {
+  transform: translateX(-250%) scale(0.5);
+  filter: blur(30px);
+  opacity: 0;
+  z-index: 1;
 }
 
-.blur-carousel-glow {
+/* Item 2: Blurred Left */
+.lun-slider-item:nth-child(2) {
+  transform: translateX(-120%) scale(0.75);
+  filter: blur(10px);
+  opacity: 0.5;
+  z-index: 5;
+}
+
+/* Item 3: FOCUS CENTER CLEAR */
+.lun-slider-item:nth-child(3) {
+  transform: translateX(0) scale(1);
+  filter: blur(0);
+  opacity: 1;
+  z-index: 20;
+  box-shadow: 0 30px 60px rgba(139, 92, 246, 0.4);
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+.lun-slider-item:nth-child(3) .lun-slider-image img {
+  transform: scale(1.05);
+}
+
+/* Item 4: Blurred Right */
+.lun-slider-item:nth-child(4) {
+  transform: translateX(120%) scale(0.75);
+  filter: blur(10px);
+  opacity: 0.5;
+  z-index: 5;
+}
+
+/* Item 5: Hidden Far Right */
+.lun-slider-item:nth-child(5) {
+  transform: translateX(250%) scale(0.5);
+  filter: blur(30px);
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Item 6+: Extinguished */
+.lun-slider-item:nth-child(n+6) {
+  transform: translateX(300%) scale(0.5);
+  opacity: 0;
+  filter: blur(30px);
+}
+
+/* Content overlays */
+.lun-slider-content {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(to top, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0) 100%);
-  z-index: 2;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0) 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.5s ease;
   pointer-events: none;
 }
 
-.blur-carousel-info {
-  padding: 1.5rem;
-  position: relative;
-  z-index: 3;
-  background: var(--bg-darker);
-  /* integrate with the glow transition */
-  margin-top: -20px;
-}
-
-.blur-carousel-badge {
-  position: absolute;
-  top: -15px;
-  right: 1.5rem;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(236, 72, 153, 0.4);
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.4s ease;
-}
-
-.blur-carousel-item.active .blur-carousel-badge {
+.lun-slider-item:nth-child(3) .lun-slider-content {
   opacity: 1;
-  transform: translateY(0);
+  pointer-events: auto;
 }
 
-.blur-carousel-info h3 {
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--text-main);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.blur-carousel-price {
-  font-size: 1.25rem;
-  font-weight: 800;
+.lun-slider-badge {
+  background: var(--primary);
   color: #fff;
-  background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 20px;
+  width: fit-content;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.lun-slider-content h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.2rem;
+  color: #fff;
+}
+
+.lun-slider-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+.lun-slider-detail-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  padding: 0.6rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.lun-slider-detail-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+/* Navigation Arrows */
+.lun-slider-arrows {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5%;
+  transform: translateY(-50%);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.lun-slider-arrows button {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.lun-slider-arrows button:hover {
+  background: var(--primary);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
 }
 
 .navbar-links a:not(.btn)::after {
