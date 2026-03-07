@@ -34,7 +34,7 @@ export default function Navbar() {
           {user?.role === 'vendor' && (
             <>
               <Link to='/dashboard'>Dashboard</Link>
-              <span style={{ color: '#6b7280', fontSize: '0.85rem' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
                 {user.businessName}
               </span>
               <button className='btn btn-outline btn-sm' onClick={handleLogout}>
@@ -45,7 +45,7 @@ export default function Navbar() {
 
           {user?.role === 'buyer' && (
             <>
-              <span style={{ color: '#6b7280', fontSize: '0.85rem' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
                 Hi, {user.name}
               </span>
               <button className='btn btn-outline btn-sm' onClick={handleLogout}>

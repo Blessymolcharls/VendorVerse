@@ -6,12 +6,12 @@ export default function ProductDetailPage() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [imgIdx, setImgIdx]   = useState(0);
+  const [imgIdx, setImgIdx] = useState(0);
 
   useEffect(() => {
     getProduct(id)
       .then(({ data }) => setProduct(data.product))
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => setLoading(false));
   }, [id]);
 
@@ -23,7 +23,7 @@ export default function ProductDetailPage() {
   return (
     <div className='page'>
       {/* Breadcrumb */}
-      <div style={{ fontSize: '0.85rem', color: '#6b7280', marginBottom: '1.5rem' }}>
+      <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
         <Link to='/'>Browse</Link> › {name}
       </div>
 
@@ -31,7 +31,7 @@ export default function ProductDetailPage() {
         {/* Images */}
         <div>
           <div style={{
-            background: '#ede9fe', borderRadius: 12, height: 360,
+            background: 'var(--glass-bg)', borderRadius: 12, height: 360,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             overflow: 'hidden', marginBottom: 12,
           }}>
@@ -49,7 +49,7 @@ export default function ProductDetailPage() {
                   onClick={() => setImgIdx(i)}
                   style={{
                     width: 60, height: 60, borderRadius: 8, overflow: 'hidden',
-                    border: i === imgIdx ? '3px solid #6c63ff' : '2px solid #e5e7eb',
+                    border: i === imgIdx ? '3px solid var(--primary)' : '2px solid var(--glass-border)',
                     cursor: 'pointer',
                   }}
                 >
@@ -72,24 +72,24 @@ export default function ProductDetailPage() {
           )}
 
           {/* Price */}
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#6c63ff', marginBottom: '1rem' }}>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '1rem' }}>
             ${Number(price).toFixed(2)}
-            <span style={{ fontSize: '1rem', color: '#6b7280', fontWeight: 400 }}> / {unit}</span>
+            <span style={{ fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400 }}> / {unit}</span>
           </div>
 
           {/* Availability */}
           <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', fontSize: '0.9rem' }}>
-            <span style={{ color: isAvailable && stock > 0 ? '#059669' : '#dc2626', fontWeight: 600 }}>
+            <span style={{ color: isAvailable && stock > 0 ? '#34d399' : '#f87171', fontWeight: 600 }}>
               {isAvailable && stock > 0 ? `✓ In Stock (${stock} units)` : '✗ Out of Stock'}
             </span>
             {minOrderQty > 1 && (
-              <span style={{ color: '#6b7280' }}>Min order: {minOrderQty}</span>
+              <span style={{ color: 'var(--text-muted)' }}>Min order: {minOrderQty}</span>
             )}
           </div>
 
           {/* Description */}
-          <div className='card' style={{ marginBottom: '1.5rem', background: '#f8f9fc' }}>
-            <h3 style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: '#6b7280' }}>Description</h3>
+          <div className='card' style={{ marginBottom: '1.5rem', background: 'var(--glass-bg)' }}>
+            <h3 style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--text-muted)' }}>Description</h3>
             <p style={{ lineHeight: 1.7 }}>{description}</p>
           </div>
 
@@ -98,17 +98,17 @@ export default function ProductDetailPage() {
             <Link to={`/vendors/${vendor._id}`} style={{ textDecoration: 'none' }}>
               <div className='card' style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <div style={{
-                  width: 48, height: 48, borderRadius: '50%', background: 'linear-gradient(135deg,#6c63ff,#ff6584)',
+                  width: 48, height: 48, borderRadius: '50%', background: 'linear-gradient(135deg,var(--primary),var(--secondary))',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', flexShrink: 0,
                 }}>🏪</div>
                 <div>
-                  <div style={{ fontWeight: 700, color: '#1a1a2e' }}>{vendor.businessName}</div>
+                  <div style={{ fontWeight: 700, color: 'var(--text-main)' }}>{vendor.businessName}</div>
                   {vendor.averageRating > 0 && (
-                    <div style={{ color: '#f59e0b', fontSize: '0.85rem' }}>
+                    <div style={{ color: '#fbbf24', fontSize: '0.85rem' }}>
                       ★ {vendor.averageRating} · {vendor.totalRatings} reviews
                     </div>
                   )}
-                  <div style={{ fontSize: '0.8rem', color: '#6c63ff', marginTop: 2 }}>View vendor profile →</div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--primary-hover)', marginTop: 2 }}>View vendor profile →</div>
                 </div>
               </div>
             </Link>

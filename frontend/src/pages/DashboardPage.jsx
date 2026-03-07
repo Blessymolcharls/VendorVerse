@@ -5,16 +5,16 @@ import VendorDashboard from '../components/VendorDashboard';
 
 export default function DashboardPage() {
   const { user } = useAuth();
-  const [vendor, setVendor]       = useState(null);
+  const [vendor, setVendor] = useState(null);
   const [editProfile, setEditProfile] = useState(false);
   const [profileForm, setProfileForm] = useState({});
-  const [saving, setSaving]       = useState(false);
-  const [msg, setMsg]             = useState('');
+  const [saving, setSaving] = useState(false);
+  const [msg, setMsg] = useState('');
 
   useEffect(() => {
     getMyVendorProfile()
       .then(({ data }) => { setVendor(data.vendor); setProfileForm(data.vendor); })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const handleProfileSave = async (e) => {
@@ -45,16 +45,16 @@ export default function DashboardPage() {
             <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
               <div style={{
                 width: 64, height: 64, borderRadius: '50%',
-                background: 'linear-gradient(135deg, #6c63ff, #ff6584)',
+                background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: '1.8rem', margin: '0 auto 0.75rem',
               }}>
                 🏪
               </div>
               <div style={{ fontWeight: 700 }}>{vendor?.businessName}</div>
-              <div style={{ fontSize: '0.8rem', color: '#6b7280' }}>{user?.email}</div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{user?.email}</div>
               {vendor?.averageRating > 0 && (
-                <div style={{ color: '#f59e0b', fontWeight: 700, marginTop: 4 }}>
+                <div style={{ color: '#fbbf24', fontWeight: 700, marginTop: 4 }}>
                   ★ {vendor.averageRating} ({vendor.totalRatings} reviews)
                 </div>
               )}
@@ -62,9 +62,9 @@ export default function DashboardPage() {
 
             {!editProfile ? (
               <>
-                <div style={{ fontSize: '0.85rem', color: '#6b7280', marginBottom: '0.5rem' }}>{vendor?.description}</div>
-                <div style={{ fontSize: '0.8rem', color: '#6b7280' }}>{vendor?.address}</div>
-                <div style={{ fontSize: '0.8rem', color: '#6b7280' }}>{vendor?.phone}</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>{vendor?.description}</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{vendor?.address}</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{vendor?.phone}</div>
                 <button
                   className='btn btn-outline btn-sm'
                   style={{ marginTop: '1rem', width: '100%' }}

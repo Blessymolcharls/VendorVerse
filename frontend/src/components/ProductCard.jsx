@@ -22,7 +22,7 @@ export default function ProductCard({ product }) {
             height: 160,
             borderRadius: 8,
             overflow: 'hidden',
-            background: '#ede9fe',
+            background: 'rgba(255, 255, 255, 0.05)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -41,22 +41,22 @@ export default function ProductCard({ product }) {
       </Link>
 
       {/* Name */}
-      <Link to={`/products/${_id}`} style={{ fontWeight: 700, fontSize: '1rem', color: '#1a1a2e' }}>
+      <Link to={`/products/${_id}`} style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--text-main)' }}>
         {name}
       </Link>
 
       {/* Price & stock */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ color: '#6c63ff', fontWeight: 800, fontSize: '1.1rem' }}>
+        <span style={{ color: 'var(--primary-hover)', fontWeight: 800, fontSize: '1.2rem' }}>
           ${Number(price).toFixed(2)}
-          <span style={{ fontSize: '0.7rem', fontWeight: 400, color: '#6b7280' }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-muted)' }}>
             {' '}/ {unit || 'pc'}
           </span>
         </span>
         <span
           style={{
-            fontSize: '0.75rem',
-            color: stock > 0 ? '#059669' : '#dc2626',
+            fontSize: '0.8rem',
+            color: stock > 0 ? '#34d399' : '#f87171',
             fontWeight: 600,
           }}
         >
@@ -79,11 +79,11 @@ export default function ProductCard({ product }) {
       {vendor && (
         <Link
           to={`/vendors/${vendor._id}`}
-          style={{ fontSize: '0.8rem', color: '#6b7280', marginTop: 'auto' }}
+          style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: 'auto' }}
         >
           🏪 {vendor.businessName}
           {vendor.averageRating > 0 && (
-            <span style={{ marginLeft: 6, color: '#f59e0b' }}>
+            <span style={{ marginLeft: 6, color: '#fbbf24' }}>
               ★ {vendor.averageRating}
             </span>
           )}

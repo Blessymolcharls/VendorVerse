@@ -6,7 +6,7 @@ import RatingSystem from '../components/RatingSystem';
 
 const Stars = ({ score }) => (
   <span className='stars'>
-    {[1,2,3,4,5].map((s) => (
+    {[1, 2, 3, 4, 5].map((s) => (
       <span key={s} className={`star ${s <= Math.round(score) ? 'filled' : ''}`} style={{ fontSize: '1rem' }}>★</span>
     ))}
   </span>
@@ -14,14 +14,14 @@ const Stars = ({ score }) => (
 
 export default function VendorProfilePage() {
   const { id } = useParams();
-  const [data, setData]     = useState(null);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const load = () => {
     setLoading(true);
     getVendor(id)
       .then(({ data }) => setData(data))
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => setLoading(false));
   };
 
@@ -50,7 +50,7 @@ export default function VendorProfilePage() {
           {vendor.description && <p style={{ marginTop: 8 }}>{vendor.description}</p>}
           <div style={{ marginTop: 8, fontSize: '0.85rem', opacity: 0.8 }}>
             {vendor.address && <span>📍 {vendor.address}  </span>}
-            {vendor.phone   && <span>📞 {vendor.phone}</span>}
+            {vendor.phone && <span>📞 {vendor.phone}</span>}
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@ export default function VendorProfilePage() {
         <div>
           <h2 style={{ marginBottom: '1rem' }}>Products ({products.length})</h2>
           {products.length === 0 ? (
-            <div className='card' style={{ textAlign: 'center', color: '#6b7280', padding: '2rem' }}>
+            <div className='card' style={{ textAlign: 'center', color: 'var(--text-muted)', padding: '2rem' }}>
               No products listed yet.
             </div>
           ) : (
@@ -80,11 +80,11 @@ export default function VendorProfilePage() {
                       <span style={{ fontWeight: 600 }}>{r.buyer?.name || 'Buyer'}</span>
                       <Stars score={r.score} />
                     </div>
-                    {r.review && <p style={{ marginTop: 6, color: '#374151', fontSize: '0.9rem' }}>{r.review}</p>}
-                    <div style={{ marginTop: 8, fontSize: '0.75rem', color: '#9ca3af', display: 'flex', gap: 12 }}>
-                      {r.reliability   && <span>Reliability: {r.reliability}★</span>}
+                    {r.review && <p style={{ marginTop: 6, color: 'var(--text-main)', fontSize: '0.9rem' }}>{r.review}</p>}
+                    <div style={{ marginTop: 8, fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', gap: 12 }}>
+                      {r.reliability && <span>Reliability: {r.reliability}★</span>}
                       {r.communication && <span>Communication: {r.communication}★</span>}
-                      {r.delivery      && <span>Delivery: {r.delivery}★</span>}
+                      {r.delivery && <span>Delivery: {r.delivery}★</span>}
                     </div>
                   </div>
                 ))}
