@@ -49,10 +49,10 @@ export default function CartSidebar() {
               {cartItems.map(item => (
                 <div key={item._id} className="cart-item">
                   <div className="cart-item-image">
-                    <img src={item.images?.[0] || 'https://via.placeholder.com/100'} alt={item.title} />
+                    <img src={item.images?.[0] || 'https://via.placeholder.com/100'} alt={item.name} />
                   </div>
                   <div className="cart-item-details">
-                    <h4>{item.title}</h4>
+                    <h4>{item.name}</h4>
                     <p className="cart-item-price">${item.price.toFixed(2)}</p>
                     <div className="cart-item-actions">
                       <div className="cart-quantity-control">
