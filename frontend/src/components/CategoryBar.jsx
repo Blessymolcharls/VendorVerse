@@ -1,38 +1,24 @@
-import { useState, useEffect } from 'react';
-import { getTags } from '../services/api';
-
 export default function CategoryBar({ selectedCategory, onSelectCategory }) {
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    getTags()
-      .then((r) => setCategories(r.data.tags))
-      .catch(() => {
-        console.warn("Categories failed. Loading mock categories.");
-        setCategories([
-          { _id: 'cat1', name: 'Electronics' },
-          { _id: 'cat2', name: 'Fashion' },
-          { _id: 'cat3', name: 'Home & Kitchen' }
-        ]);
-      });
-  }, []);
+  const topics = [
+    { id: '', name: 'All' },
+    { id: 'Electronics', name: 'Electronics' },
+    { id: 'Clothing', name: 'Clothing & Fashion' },
+    { id: 'Home', name: 'Home & Kitchen' },
+    { id: 'Sports', name: 'Sports & Outdoors' },
+    { id: 'Books', name: 'Books' },
+    { id: 'Food', name: 'Groceries & Fresh' }
+  ];
 
   return (
-    <div className="category-bar-container">
-      <div className="category-bar">
-        <button
-          className={`category-pill ${selectedCategory === '' ? 'active' : ''}`}
-          onClick={() => onSelectCategory('')}
-        >
-          All Products
-        </button>
-        {categories.map((cat) => (
+    <div className="sub-navbar">
+      <div className="sub-navbar-content">
+        {topics.map((topic) => (
           <button
-            key={cat._id}
-            className={`category-pill ${selectedCategory === cat._id ? 'active' : ''}`}
-            onClick={() => onSelectCategory(cat._id)}
+            key={topic.name}
+            className={`sub-nav-item ${selectedCategory === topic.id ? 'active' : ''}`}
+            onClick={() => onSelectCategory(topic.id)}
           >
-            {cat.name}
+            {topic.name}
           </button>
         ))}
       </div>

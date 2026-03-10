@@ -18,6 +18,7 @@ app.use('/api/buyers', require('./routes/buyers'));
 app.use('/api/products', require('./routes/products'));
 app.use('/api/ratings', require('./routes/ratings'));
 app.use('/api/tags', require('./routes/tags'));
+app.use('/api/messages', require('./routes/messages'));
 
 // Health check
 app.get('/', (req, res) => res.json({ message: 'VendorVerse API running' }));

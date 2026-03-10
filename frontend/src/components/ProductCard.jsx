@@ -50,7 +50,7 @@ export default function ProductCard({ product }) {
       {/* Price & stock */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ color: 'var(--primary-hover)', fontWeight: 800, fontSize: '1.2rem' }}>
-          ${Number(price).toFixed(2)}
+          ₹{Number(price).toFixed(2)}
           <span style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-muted)' }}>
             {' '}/ {unit || 'pc'}
           </span>

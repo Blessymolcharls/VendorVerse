@@ -7,8 +7,9 @@ const BuyerSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true, minlength: 6 },
     phone: { type: String, default: '' },
-    address: { type: String, default: '' },
+    addresses: [{ type: String }],
     avatar: { type: String, default: '' },
+    recentSearches: [{ type: String }],
   },
   { timestamps: true }
 );

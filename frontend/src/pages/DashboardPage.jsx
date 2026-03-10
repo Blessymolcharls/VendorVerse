@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { getMyVendorProfile, updateVendorProfile } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import VendorDashboard from '../components/VendorDashboard';
+import VendorInbox from '../components/VendorInbox';
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -10,6 +11,7 @@ export default function DashboardPage() {
   const [profileForm, setProfileForm] = useState({});
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState('');
+  const [activeTab, setActiveTab] = useState('products');
 
   useEffect(() => {
     getMyVendorProfile()
@@ -106,7 +108,39 @@ export default function DashboardPage() {
 
         {/* Main dashboard */}
         <main>
-          <VendorDashboard vendor={vendor} />
+          {/* Tabs */}
+          <div style={{ display: 'flex', gap: '1rem', borderBottom: '1px solid var(--glass-border)', marginBottom: '1.5rem', paddingBottom: '0.5rem' }}>
+            <button 
+              onClick={() => setActiveTab('products')}
+              style={{
+                background: 'none', border: 'none', fontSize: '1.1rem', cursor: 'pointer',
+                color: activeTab === 'products' ? 'var(--primary)' : 'var(--text-muted)',
+                fontWeight: activeTab === 'products' ? 'bold' : 'normal',
+                borderBottom: activeTab === 'products' ? '2px solid var(--primary)' : 'none',
+                paddingBottom: '4px'
+              }}
+            >
+               My Products
+            </button>
+            <button 
+              onClick={() => setActiveTab('inbox')}
+              style={{
+                background: 'none', border: 'none', fontSize: '1.1rem', cursor: 'pointer',
+                color: activeTab === 'inbox' ? 'var(--primary)' : 'var(--text-muted)',
+                fontWeight: activeTab === 'inbox' ? 'bold' : 'normal',
+                borderBottom: activeTab === 'inbox' ? '2px solid var(--primary)' : 'none',
+                paddingBottom: '4px'
+              }}
+            >
+               Inbox
+            </button>
+          </div>
+          
+          {activeTab === 'products' ? (
+            <VendorDashboard vendor={vendor} />
+          ) : (
+            <VendorInbox />
+          )}
         </main>
       </div>
     </div>

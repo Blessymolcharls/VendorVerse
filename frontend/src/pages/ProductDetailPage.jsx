@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getProduct } from '../services/api';
+import { useAuth } from '../context/AuthContext';
+import ChatBox from '../components/ChatBox';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
+  const { user } = useAuth();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imgIdx, setImgIdx] = useState(0);
+  const [chatOpen, setChatOpen] = useState(false);
 
   useEffect(() => {
     getProduct(id)
@@ -73,7 +77,7 @@ export default function ProductDetailPage() {
 
           {/* Price */}
           <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '1rem' }}>
-            ${Number(price).toFixed(2)}
+            ₹{Number(price).toFixed(2)}
             <span style={{ fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400 }}> / {unit}</span>
           </div>
 
@@ -95,26 +99,52 @@ export default function ProductDetailPage() {
 
           {/* Vendor */}
           {vendor && (
-            <Link to={`/vendors/${vendor._id}`} style={{ textDecoration: 'none' }}>
-              <div className='card' style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <div style={{
-                  width: 48, height: 48, borderRadius: '50%', background: 'linear-gradient(135deg,var(--primary),var(--secondary))',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', flexShrink: 0,
-                }}>🏪</div>
-                <div>
-                  <div style={{ fontWeight: 700, color: 'var(--text-main)' }}>{vendor.businessName}</div>
-                  {vendor.averageRating > 0 && (
-                    <div style={{ color: '#e5e5e5', fontSize: '0.85rem' }}>
-                      ★ {vendor.averageRating} · {vendor.totalRatings} reviews
-                    </div>
-                  )}
-                  <div style={{ fontSize: '0.8rem', color: 'var(--primary-hover)', marginTop: 2 }}>View vendor profile →</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Link to={`/vendors/${vendor._id}`} style={{ textDecoration: 'none' }}>
+                <div className='card' style={{ display: 'flex', alignItems: 'center', gap: '1rem',  marginBottom: 0 }}>
+                  <div style={{
+                    width: 48, height: 48, borderRadius: '50%', background: 'linear-gradient(135deg,var(--primary),var(--secondary))',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', flexShrink: 0,
+                  }}>🏪</div>
+                  <div>
+                    <div style={{ fontWeight: 700, color: 'var(--text-main)' }}>{vendor.businessName}</div>
+                    {vendor.averageRating > 0 && (
+                      <div style={{ color: '#e5e5e5', fontSize: '0.85rem' }}>
+                        ★ {vendor.averageRating} · {vendor.totalRatings} reviews
+                      </div>
+                    )}
+                    <div style={{ fontSize: '0.8rem', color: 'var(--primary-hover)', marginTop: 2 }}>View vendor profile →</div>
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+
+              {user ? (
+                 <button 
+                  className="btn btn-primary" 
+                  style={{ width: '100%' }}
+                  onClick={() => setChatOpen(true)}
+                 >
+                   Message Vendor
+                 </button>
+              ) : (
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textAlign: 'center' }}>
+                  <Link to="/login" style={{ color: 'var(--primary)' }}>Log in</Link> to message vendor
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>
+
+      {/* ChatBox Overlay */}
+      {chatOpen && vendor && (
+        <ChatBox 
+          partnerId={vendor._id} 
+          partnerModel="Vendor" 
+          partnerName={vendor.businessName} 
+          onClose={() => setChatOpen(false)} 
+        />
+      )}
     </div>
   );
 }

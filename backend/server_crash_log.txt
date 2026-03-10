@@ -38,3 +38,21 @@ Node.js v24.14.0
 
 STDOUT: [31m[nodemon] app crashed - waiting for file changes before starting...[39m
 
+STDOUT: [32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+
+STDOUT: MongoDB connected
+
+STDOUT: Server running on port 5000
+
+STDOUT: [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+
+STDOUT: [32m[nodemon] restarting child process[39m
+[32m[nodemon] starting `node server.js`[39m
+
+STDOUT: MongoDB connected
+
+STDOUT: Server running on port 5000
+
+STDERR: ^C
+STDERR: ^C

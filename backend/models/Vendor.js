@@ -8,7 +8,7 @@ const VendorSchema = new mongoose.Schema(
     password: { type: String, required: true, minlength: 6 },
     phone: { type: String, default: '' },
     description: { type: String, default: '' },
-    address: { type: String, default: '' },
+    addresses: [{ type: String }],
     logo: { type: String, default: '' },
     averageRating: { type: Number, default: 0 },
     totalRatings: { type: Number, default: 0 },

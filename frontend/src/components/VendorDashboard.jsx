@@ -111,7 +111,7 @@ export default function VendorDashboard({ vendor }) {
                   {/* Info */}
                   <div style={{ flex: 1 }}>
                     <div style={{ fontWeight: 700 }}>{p.name}</div>
-                    <div style={{ color: '#6c63ff', fontWeight: 700 }}>${Number(p.price).toFixed(2)} / {p.unit}</div>
+                    <div style={{ color: '#6c63ff', fontWeight: 700 }}>₹{Number(p.price).toFixed(2)} / {p.unit}</div>
                     <div style={{ fontSize: '0.8rem', color: '#6b7280' }}>Stock: {p.stock}</div>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 4 }}>
                       {p.tags?.map((t) => <span key={t._id} className='tag'>{t.name}</span>)}

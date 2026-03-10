@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import CartSidebar from './components/CartSidebar';
@@ -9,6 +9,8 @@ import DashboardPage from './pages/DashboardPage';
 import VendorProfilePage from './pages/VendorProfilePage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import AboutPage from './pages/AboutPage';
+import ProfilePage from './pages/ProfilePage';
+import LandingPage from './pages/LandingPage';
 
 const ProtectedRoute = ({ children, role }) => {
   const { user } = useAuth();
@@ -18,12 +20,16 @@ const ProtectedRoute = ({ children, role }) => {
 };
 
 function AppRoutes() {
+  const location = useLocation();
+  const isLanding = location.pathname === '/';
+
   return (
     <>
-      <Navbar />
-      <CartSidebar />
+      {!isLanding && <Navbar />}
+      {!isLanding && <CartSidebar />}
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<LandingPage />} />
+        <Route path='/browse' element={<Home />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
@@ -34,6 +40,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute role='vendor'>
               <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/profile'
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
             </ProtectedRoute>
           }
         />
