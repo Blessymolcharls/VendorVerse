@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
-// Directly access the API since we are building custom auth routes in this component
-const API_URL = 'http://localhost:5000/api';
+import api from '../services/api';
 
 export default function ProfilePage() {
-  const { user, login } = useAuth(); // Need login purely to update context if we want to, though usually reload works
+  const { user, login } = useAuth();
   const navigate = useNavigate();
   
   const [profile, setProfile] = useState(null);
@@ -34,10 +31,7 @@ export default function ProfilePage() {
 
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const { data } = await axios.get(`${API_URL}/auth/me`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const { data } = await api.get('/auth/me');
         
         const u = data.user;
         setProfile(u);
@@ -63,7 +57,6 @@ export default function ProfilePage() {
     setMessage({ text: '', type: '' });
     
     try {
-      const token = localStorage.getItem('token');
       const payload = { phone, addresses };
       
       if (user.role === 'buyer') {
@@ -73,9 +66,11 @@ export default function ProfilePage() {
         payload.description = description;
       }
 
-      await axios.put(`${API_URL}/auth/profile`, payload, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const { data } = await api.put('/auth/profile', payload);
+      
+      // Update the auth context with the latest user data so the rest of the app stays in sync
+      const token = localStorage.getItem('vv_token');
+      login({ ...data.user, role: data.user.role || user.role }, token);
       
       setMessage({ text: 'Profile updated successfully!', type: 'success' });
     } catch (err) {
