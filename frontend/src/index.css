@@ -73,6 +73,27 @@
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
+  cursor: url('/paper-plane-cursor.svg') 2 2, auto;
+}
+
+*:active {
+  cursor: url('/paper-plane-cursor-click.svg') 2 2, auto;
+}
+
+a, button, [role="button"], label, select, summary, [type="button"], [type="submit"], [type="reset"] {
+  cursor: url('/paper-plane-cursor.svg') 2 2, pointer;
+}
+
+a:active, button:active, [role="button"]:active, label:active, select:active {
+  cursor: url('/paper-plane-cursor-click.svg') 2 2, pointer;
+}
+
+input, textarea {
+  cursor: url('/paper-plane-cursor.svg') 2 2, text;
+}
+
+input:active, textarea:active {
+  cursor: url('/paper-plane-cursor-click.svg') 2 2, text;
 }
 
 body {
@@ -85,6 +106,12 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+[data-theme="light"] body {
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.04) 0%, transparent 50%);
 }
 
 ::selection {
@@ -1172,7 +1199,37 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
+
+.completed-summary:hover {
+  color: var(--primary);
+  transform: scale(1.02);
+}
+
+/* Back Button */
+.journey-back-btn {
+  background: none;
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.35rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(6px);
+}
+
+.journey-back-btn:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: rgba(209, 168, 91, 0.08);
+  box-shadow: 0 0 12px rgba(209, 168, 91, 0.15);
+}
+
+/* Cursor styles moved to global reset */
 
 /* Layout overrides for Left vs Right positioning */
 .bulletin-left { flex-direction: row-reverse; }
@@ -1644,6 +1701,28 @@ a:hover {
   animation: orbFloat4 18s ease-in-out infinite;
 }
 
+/* Light mode landing page orbs - softer, appropriate colors */
+[data-theme="light"] .landing-bg-orb {
+  opacity: 0.3;
+  filter: blur(120px);
+}
+
+[data-theme="light"] .landing-orb-1 {
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.2) 0%, transparent 70%);
+}
+
+[data-theme="light"] .landing-orb-2 {
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+}
+
+[data-theme="light"] .landing-orb-3 {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+}
+
+[data-theme="light"] .landing-orb-4 {
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, transparent 70%);
+}
+
 @keyframes orbFloat1 {
   0%, 100% { transform: translate(0, 0) scale(1); }
   25%      { transform: translate(80px, 60px) scale(1.1); }
@@ -1726,6 +1805,15 @@ a:hover {
   background: radial-gradient(circle, rgba(209, 168, 91, 0.3) 0%, transparent 70%);
   border-radius: 50%;
   animation: logoGlow 3s ease-in-out infinite;
+}
+
+/* Light mode particle & logo glow fixes */
+[data-theme="light"] .landing-particle {
+  background: rgba(79, 70, 229, 0.25);
+}
+
+[data-theme="light"] .landing-logo-glow {
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
 }
 
 @keyframes logoGlow {

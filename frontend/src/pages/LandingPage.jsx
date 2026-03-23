@@ -74,16 +74,18 @@ export default function LandingPage() {
               Browse Products
             </Link>
 
-            <Link
-              to={user ? '/dashboard' : '/login'}
-              className="landing-cta-btn landing-cta-secondary"
-              id="landing-login-btn"
-            >
-              <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              {user ? 'Dashboard' : 'Sign In'}
-            </Link>
+            {!user && (
+              <Link
+                to="/login"
+                className="landing-cta-btn landing-cta-secondary"
+                id="landing-login-btn"
+              >
+                <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                Sign In
+              </Link>
+            )}
 
             <Link to="/about" className="landing-cta-btn landing-cta-outline" id="landing-about-btn">
               <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">

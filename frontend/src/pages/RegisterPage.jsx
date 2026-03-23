@@ -51,7 +51,7 @@ export default function RegisterPage() {
 
     // Give the origami animation time to cover the screen before redirecting
     setTimeout(() => {
-        navigate(activeRole === 'vendor' ? '/dashboard' : '/');
+        navigate('/browse');
     }, 3000);
   };
 

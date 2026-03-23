@@ -24,7 +24,7 @@ export default function LoginPage() {
     
     // We delay the navigation to allow the 1s flight    // Give animation time to play
     setTimeout(() => {
-        navigate(activeRole === 'vendor' ? '/dashboard' : '/');
+        navigate('/browse');
     }, 3000);
   };
 

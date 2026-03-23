@@ -42,7 +42,6 @@ export default function BlurCarousel({ products }) {
               />
             </div>
             <div className="lun-slider-content">
-              <span className="lun-slider-badge">Premium Selection</span>
               <h2>{product.name}</h2>
               <p className="lun-slider-price">₹{product.price?.toFixed(2)}</p>
               <button className="lun-slider-detail-btn">See Detail</button>

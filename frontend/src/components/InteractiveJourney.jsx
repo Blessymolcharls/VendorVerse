@@ -72,6 +72,13 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
     }
   };
 
+  const handleBack = () => {
+    if (currentIndex > 0) {
+      setError('');
+      setCurrentIndex(prev => prev - 1);
+    }
+  };
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleNext(e);
@@ -196,7 +203,7 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
                           
                           {/* Completed Step View */}
                           {isCompleted ? (
-                              <div className="completed-summary">
+                              <div className="completed-summary" onClick={() => { setError(''); setCurrentIndex(index); }} style={{ cursor: 'pointer' }} title="Click to edit">
                                   ✓ {step.type === 'password' ? '••••••••' : formData[step.id]}
                               </div>
                           ) : (
@@ -258,7 +265,14 @@ export default function InteractiveJourney({ steps, onSubmit, topContent, ctaTex
                                       </div>
                                   )}
                                   
-                                  {step.type !== 'role-selection' && isActive && <p className="hint-text" style={{ marginTop: '0.5rem', marginBottom: 0, color: 'var(--text-muted)' }}>Press <strong style={{color: 'var(--text-main)'}}>Enter</strong> to continue</p>}
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
+                                    {currentIndex > 0 && isActive && step.type !== 'role-selection' ? (
+                                      <button onClick={handleBack} className="journey-back-btn" type="button">
+                                        ← Back
+                                      </button>
+                                    ) : <span />}
+                                    {step.type !== 'role-selection' && isActive && <p className="hint-text" style={{ margin: 0, color: 'var(--text-muted)' }}>Press <strong style={{color: 'var(--text-main)'}}>Enter</strong> to continue</p>}
+                                  </div>
                               </>
                           )}
                       </div>

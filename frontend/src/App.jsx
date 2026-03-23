@@ -5,7 +5,7 @@ import CartSidebar from './components/CartSidebar';
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import DashboardPage from './pages/DashboardPage';
+
 import VendorProfilePage from './pages/VendorProfilePage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import AboutPage from './pages/AboutPage';
@@ -35,14 +35,7 @@ function AppRoutes() {
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/vendors/:id' element={<VendorProfilePage />} />
         <Route path='/products/:id' element={<ProductDetailPage />} />
-        <Route
-          path='/dashboard'
-          element={
-            <ProtectedRoute role='vendor'>
-              <DashboardPage />
-            </ProtectedRoute>
-          }
-        />
+
         <Route
           path='/profile'
           element={
