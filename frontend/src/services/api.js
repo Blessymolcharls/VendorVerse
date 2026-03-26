@@ -46,4 +46,8 @@ export const sendMessage       = (data) => api.post('/messages', data);
 export const getMessages       = (otherUserId) => api.get(`/messages/${otherUserId}`);
 export const getConversations  = () => api.get('/messages/conversations/me');
 
+// ── Dummy Payments / Orders ─────────────────────────
+export const mockCheckoutPayment = (data) => api.post('/payments/mock-checkout', data);
+export const getMyOrders = () => api.get('/payments/my-orders');
+
 export default api;

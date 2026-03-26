@@ -1,292 +1,329 @@
-# VendorVerse 🛒
+# VendorVerse
 
-A **poly-vendor marketplace** where wholesalers (vendors) list products and buyers browse and rate them.
+VendorVerse is a multi-vendor marketplace web application where vendors publish wholesale products and buyers discover, compare, rate, and communicate with vendors.
 
-**Stack:** React · Node.js/Express · MongoDB/Mongoose
+Stack: React (Vite) + Node.js/Express + MongoDB (Mongoose)
 
----
+Payment Note: This project now includes a dummy payment flow for academic/demo use only. No real payment gateway is integrated and no real money is processed.
 
-## Folder Structure
+## Project Overview
 
-```
+VendorVerse is designed as a DBMS-oriented full-stack project that demonstrates:
+
+- Role-based authentication (Vendor and Buyer)
+- Product catalog management with full-text search and tag filters
+- Vendor rating and reliability scoring workflow
+- Buyer-vendor messaging (chat-style conversations)
+- Structured MongoDB schemas with references, indexing, and aggregation
+
+The backend exposes REST APIs under `/api/*` and the frontend consumes them using Axios through a unified API layer.
+
+## Objectives
+
+1. Build a functional poly-vendor marketplace that supports both supply-side (vendors) and demand-side (buyers) workflows.
+2. Model marketplace data cleanly using MongoDB collections with proper relationships (`ObjectId` references).
+3. Implement secure JWT-based authentication and role-based route protection.
+4. Support scalable product discovery with search, filters, and pagination.
+5. Capture vendor trust metrics through a one-rating-per-buyer-per-vendor model and auto-updated average rating.
+6. Demonstrate practical CRUD operations across multiple domain entities.
+
+## Brief Description Of Major Modules
+
+| Module | Brief Description |
+|--------|-------------------|
+| Authentication | Separate login/register flows for vendors and buyers with JWT token generation and protected profile endpoints. |
+| Vendor Management | Public vendor listing/profile endpoints and private vendor profile update endpoint. |
+| Buyer Management | Buyer profile read/update endpoint for authenticated buyers. |
+| Product Management | Vendors create/update/delete products; buyers browse with search, tag filtering, vendor filtering, pagination, recommendations, and image-search mock endpoint. |
+| Payments (Dummy) | Buyer-only mock checkout flow with selectable payment methods, simulated success/failure, and stored order records. |
+| Ratings | Buyers submit/update/delete ratings for vendors; backend recalculates vendor `averageRating` and `totalRatings`. |
+| Tags | Public tag listing and vendor-controlled tag creation for product categorization. |
+| Messaging | Buyer-vendor direct messaging with conversation history and conversation summary list. |
+
+## Project Structure
+
+```text
 VendorVerse/
-├── backend/                      # Express API
+├── backend/
 │   ├── middleware/
-│   │   └── auth.js               # JWT protect, vendorOnly, buyerOnly
+│   │   └── auth.js
 │   ├── models/
 │   │   ├── Vendor.js
 │   │   ├── Buyer.js
 │   │   ├── Product.js
+│   │   ├── Order.js
 │   │   ├── Rating.js
-│   │   └── Tag.js
+│   │   ├── Tag.js
+│   │   └── Message.js
 │   ├── routes/
-│   │   ├── auth.js               # /api/auth/vendor/* and /api/auth/buyer/*
-│   │   ├── vendors.js            # /api/vendors
-│   │   ├── buyers.js             # /api/buyers
-│   │   ├── products.js           # /api/products
-│   │   ├── ratings.js            # /api/ratings
-│   │   └── tags.js               # /api/tags
-│   ├── .env
-│   ├── package.json
-│   └── server.js
-│
-└── frontend/                     # Vite + React
+│   │   ├── auth.js
+│   │   ├── vendors.js
+│   │   ├── buyers.js
+│   │   ├── products.js
+│   │   ├── payments.js
+│   │   ├── ratings.js
+│   │   ├── tags.js
+│   │   └── messages.js
+│   ├── server.js
+│   └── package.json
+└── frontend/
     ├── src/
     │   ├── components/
-    │   │   ├── Navbar.jsx
-    │   │   ├── ProductCard.jsx
-    │   │   ├── ProductFilter.jsx  # Search + tag filter
-    │   │   ├── ProductForm.jsx    # Add / edit product form
-    │   │   ├── RatingSystem.jsx   # Vendor rating widget
-    │   │   └── VendorDashboard.jsx
     │   ├── context/
-    │   │   └── AuthContext.jsx
     │   ├── pages/
-    │   │   ├── Home.jsx           # Product listing + filter
-    │   │   ├── LoginPage.jsx
-    │   │   ├── RegisterPage.jsx
-    │   │   ├── DashboardPage.jsx  # Vendor dashboard
-    │   │   ├── VendorProfilePage.jsx
-    │   │   └── ProductDetailPage.jsx
     │   ├── services/
-    │   │   └── api.js             # Axios instance + all API calls
     │   ├── App.jsx
-    │   ├── index.css
     │   └── main.jsx
-    ├── index.html
-    ├── package.json
-    └── vite.config.js
+    └── package.json
 ```
 
----
-
-## Setup & Run
+## Setup And Run
 
 ### Prerequisites
 
-- Node.js ≥ 18
-- MongoDB running locally (`mongod`) or a MongoDB Atlas URI
+- Node.js 18+
+- MongoDB local instance or MongoDB Atlas URI
 
-### 1. Backend
+### Backend
 
 ```bash
 cd backend
-# Edit .env – set MONGO_URI if using Atlas
-npm run dev     # starts on http://localhost:5000
+npm install
+npm run dev
 ```
 
-### 2. Frontend
+Backend runs on `http://localhost:5000` (from `.env` configuration).
+
+### Frontend
 
 ```bash
 cd frontend
-npm run dev     # starts on http://localhost:5173
+npm install
+npm run dev
 ```
 
----
+Frontend runs on `http://localhost:5173`.
 
-## Environment Variables (`backend/.env`)
+## Environment Variables
 
-```
+Create `backend/.env`:
+
+```env
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/vendorverse
 JWT_SECRET=vendorverse_jwt_secret_key_2026
 JWT_EXPIRE=7d
 ```
 
----
+## Frontend Routes (Current)
 
-## REST API Reference
+| Route | Page |
+|------|------|
+| `/` | Landing page |
+| `/browse` | Product browsing home |
+| `/about` | About page |
+| `/login` | Login page |
+| `/register` | Register page |
+| `/vendors/:id` | Vendor public profile |
+| `/products/:id` | Product detail page |
+| `/checkout` | Buyer-only dummy checkout page |
+| `/profile` | Protected user profile |
+
+## API Summary Tables
 
 ### Authentication
 
-| Method | Endpoint                     | Body                                           | Auth |
-|--------|------------------------------|------------------------------------------------|------|
-| POST   | `/api/auth/vendor/register`  | `businessName, email, password, [phone, address, description]` | — |
-| POST   | `/api/auth/vendor/login`     | `email, password`                             | — |
-| POST   | `/api/auth/buyer/register`   | `name, email, password, [phone, address]`     | — |
-| POST   | `/api/auth/buyer/login`      | `email, password`                             | — |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/auth/vendor/register` | Register vendor | Public |
+| POST | `/api/auth/vendor/login` | Vendor login | Public |
+| POST | `/api/auth/buyer/register` | Register buyer | Public |
+| POST | `/api/auth/buyer/login` | Buyer login | Public |
+| GET | `/api/auth/me` | Get current user profile | JWT |
+| PUT | `/api/auth/profile` | Update current user profile | JWT |
 
 ### Products
 
-| Method | Endpoint                  | Description                          | Auth         |
-|--------|---------------------------|--------------------------------------|--------------|
-| GET    | `/api/products`           | Browse products (filter/search/page) | —            |
-| GET    | `/api/products/:id`       | Single product detail                | —            |
-| GET    | `/api/products/vendor/me` | Vendor's own products                | Vendor JWT   |
-| POST   | `/api/products`           | Add a new product                    | Vendor JWT   |
-| PUT    | `/api/products/:id`       | Update a product                     | Vendor JWT   |
-| DELETE | `/api/products/:id`       | Delete a product                     | Vendor JWT   |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/products` | Browse products with search, tags, vendor, page, limit | Public / Optional Auth |
+| GET | `/api/products/:id` | Get single product details | Public |
+| GET | `/api/products/recommendations` | Get buyer recommendations from recent searches | Buyer JWT |
+| POST | `/api/products/search-by-image` | Mock image-based product search | Public |
+| GET | `/api/products/vendor/me` | Get vendor's own products | Vendor JWT |
+| POST | `/api/products` | Create product | Vendor JWT |
+| PUT | `/api/products/:id` | Update own product | Vendor JWT |
+| DELETE | `/api/products/:id` | Delete own product | Vendor JWT |
 
-**Query params for `GET /api/products`:**
-- `search` – full-text search
-- `tags` – comma-separated tag IDs
-- `vendor` – filter by vendor ID
-- `page`, `limit` – pagination
+### Payments (Dummy)
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/payments/mock-checkout` | Simulate payment and create order record | Buyer JWT |
+| GET | `/api/payments/my-orders` | Get logged-in buyer order history | Buyer JWT |
 
 ### Vendors
 
-| Method | Endpoint               | Description                  | Auth       |
-|--------|------------------------|------------------------------|------------|
-| GET    | `/api/vendors`         | List all vendors             | —          |
-| GET    | `/api/vendors/:id`     | Vendor profile + products + ratings | —   |
-| GET    | `/api/vendors/me/profile` | Own vendor profile        | Vendor JWT |
-| PUT    | `/api/vendors/me/profile` | Update own profile        | Vendor JWT |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/vendors` | List active vendors | Public |
+| GET | `/api/vendors/:id` | Vendor profile with products and ratings | Public |
+| GET | `/api/vendors/me/profile` | Get own vendor profile | Vendor JWT |
+| PUT | `/api/vendors/me/profile` | Update own vendor profile | Vendor JWT |
+
+### Buyers
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/buyers/me` | Get own buyer profile | Buyer JWT |
+| PUT | `/api/buyers/me` | Update own buyer profile | Buyer JWT |
 
 ### Ratings
 
-| Method | Endpoint                       | Description                   | Auth      |
-|--------|--------------------------------|-------------------------------|-----------|
-| GET    | `/api/ratings/vendor/:vendorId`| All ratings for a vendor       | —         |
-| POST   | `/api/ratings`                 | Submit / update a rating       | Buyer JWT |
-| DELETE | `/api/ratings/:id`             | Delete a rating                | Buyer JWT |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/ratings/vendor/:vendorId` | Get all ratings for vendor | Public |
+| POST | `/api/ratings` | Create/update buyer rating for vendor | Buyer JWT |
+| DELETE | `/api/ratings/:id` | Delete own rating | Buyer JWT |
 
 ### Tags
 
-| Method | Endpoint     | Description        | Auth       |
-|--------|--------------|--------------------|------------|
-| GET    | `/api/tags`  | List all tags      | —          |
-| POST   | `/api/tags`  | Create a tag       | Vendor JWT |
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/tags` | List tags | Public |
+| POST | `/api/tags` | Create tag | Vendor JWT |
 
----
+### Messages
 
-## Example API Requests
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/messages` | Send message to buyer/vendor | JWT |
+| GET | `/api/messages/:otherUserId` | Get conversation messages with another user | JWT |
+| GET | `/api/messages/conversations/me` | Get conversation list with last message and unread count | JWT |
 
-### Register a Vendor
+## Database Tables (MongoDB Collections)
 
-```json
-POST /api/auth/vendor/register
-Content-Type: application/json
+### Overview Table
 
-{
-  "businessName": "BulkElectronics Co.",
-  "email": "vendor@example.com",
-  "password": "securepass123",
-  "phone": "+1-555-0100",
-  "description": "Wholesale electronics supplier since 2010",
-  "address": "123 Warehouse Blvd, Chicago, IL"
-}
-```
+| Collection | Purpose |
+|-----------|---------|
+| `vendors` | Stores vendor accounts, profile details, rating aggregates, and status. |
+| `buyers` | Stores buyer accounts, profile details, and recent search history. |
+| `products` | Stores product catalog entries linked to vendors and tags. |
+| `orders` | Stores checkout snapshots, totals, shipping address, and dummy payment metadata. |
+| `ratings` | Stores buyer-to-vendor ratings with review and dimension scores. |
+| `tags` | Stores reusable product tags and categories. |
+| `messages` | Stores direct messages exchanged between buyers and vendors. |
 
-**Response:**
-```json
-{
-  "success": true,
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI...",
-  "user": {
-    "id": "65f4a2b3c8d9e0f1a2b3c4d5",
-    "businessName": "BulkElectronics Co.",
-    "email": "vendor@example.com",
-    "role": "vendor"
-  }
-}
-```
+### Detailed Table Definitions
 
----
+#### 1) `vendors`
 
-### Add a Product (Vendor JWT required)
+| Field | Type | Description |
+|------|------|-------------|
+| `businessName` | String | Vendor/organization display name. |
+| `email` | String (unique) | Login identity for vendor. |
+| `password` | String (hashed) | Encrypted password via `bcryptjs` pre-save hook. |
+| `phone` | String | Contact number. |
+| `description` | String | Vendor profile summary. |
+| `addresses` | [String] | One or more addresses. |
+| `logo` | String | Logo URL/path. |
+| `averageRating` | Number | Aggregated average from `ratings` collection. |
+| `totalRatings` | Number | Count of ratings received. |
+| `isActive` | Boolean | Indicates if vendor is active. |
+| `createdAt`, `updatedAt` | Date | Auto-managed timestamps. |
 
-```json
-POST /api/products
-Authorization: Bearer <vendor_token>
-Content-Type: application/json
+#### 2) `buyers`
 
-{
-  "name": "USB-C Hub 7-in-1",
-  "description": "Aluminum 7-port USB-C hub with HDMI 4K, 3x USB-A, SD card reader",
-  "price": 18.50,
-  "stock": 500,
-  "unit": "piece",
-  "minOrderQty": 10,
-  "images": ["https://example.com/images/hub1.jpg"],
-  "tags": ["65f4a2b3c8d9e0f1a2b3c4e1", "65f4a2b3c8d9e0f1a2b3c4e2"]
-}
-```
+| Field | Type | Description |
+|------|------|-------------|
+| `name` | String | Buyer full name. |
+| `email` | String (unique) | Login identity for buyer. |
+| `password` | String (hashed) | Encrypted password via `bcryptjs` pre-save hook. |
+| `phone` | String | Contact number. |
+| `addresses` | [String] | Saved addresses. |
+| `avatar` | String | Profile avatar URL/path. |
+| `recentSearches` | [String] | Recent search terms for recommendations. |
+| `createdAt`, `updatedAt` | Date | Auto-managed timestamps. |
 
-**Response:**
-```json
-{
-  "success": true,
-  "product": {
-    "_id": "65f4a2b3c8d9e0f1a2b3c4f0",
-    "name": "USB-C Hub 7-in-1",
-    "price": 18.5,
-    "stock": 500,
-    "vendor": "65f4a2b3c8d9e0f1a2b3c4d5",
-    "tags": [
-      { "_id": "65f4a2b3c8d9e0f1a2b3c4e1", "name": "electronics", "slug": "electronics" },
-      { "_id": "65f4a2b3c8d9e0f1a2b3c4e2", "name": "wholesale",    "slug": "wholesale"   }
-    ],
-    "isAvailable": true,
-    "createdAt": "2026-03-05T08:00:00.000Z"
-  }
-}
-```
+#### 3) `products`
 
----
+| Field | Type | Description |
+|------|------|-------------|
+| `name` | String | Product name. |
+| `description` | String | Product description text. |
+| `price` | Number | Unit price (min 0). |
+| `stock` | Number | Available quantity (min 0). |
+| `images` | [String] | Product image URLs/paths. |
+| `vendor` | ObjectId -> `vendors` | Vendor owner reference. |
+| `tags` | [ObjectId -> `tags`] | Tag references used in filtering. |
+| `unit` | String | Sale unit (default: piece). |
+| `minOrderQty` | Number | Minimum order quantity. |
+| `isAvailable` | Boolean | Availability status. |
+| `createdAt`, `updatedAt` | Date | Auto-managed timestamps. |
 
-### Rate a Vendor (Buyer JWT required)
+Indexes:
+- Text index on `{ name, description }` for full-text search.
 
-```json
-POST /api/ratings
-Authorization: Bearer <buyer_token>
-Content-Type: application/json
+#### 4) `ratings`
 
-{
-  "vendorId": "65f4a2b3c8d9e0f1a2b3c4d5",
-  "score": 5,
-  "reliability": 5,
-  "communication": 4,
-  "delivery": 5,
-  "review": "Excellent wholesale partner. Fast shipping, great product quality."
-}
-```
+| Field | Type | Description |
+|------|------|-------------|
+| `vendor` | ObjectId -> `vendors` | Rated vendor. |
+| `buyer` | ObjectId -> `buyers` | Buyer who submitted rating. |
+| `score` | Number (1-5) | Overall rating score. |
+| `review` | String | Optional textual review. |
+| `reliability` | Number (1-5) | Reliability dimension score. |
+| `communication` | Number (1-5) | Communication dimension score. |
+| `delivery` | Number (1-5) | Delivery dimension score. |
+| `createdAt`, `updatedAt` | Date | Auto-managed timestamps. |
 
-**Response:**
-```json
-{
-  "success": true,
-  "rating": {
-    "_id": "65f4a2b3c8d9e0f1a2b3c510",
-    "vendor": "65f4a2b3c8d9e0f1a2b3c4d5",
-    "buyer": { "_id": "...", "name": "John Doe" },
-    "score": 5,
-    "reliability": 5,
-    "communication": 4,
-    "delivery": 5,
-    "review": "Excellent wholesale partner. Fast shipping, great product quality.",
-    "createdAt": "2026-03-05T09:00:00.000Z"
-  }
-}
-```
+Indexes:
+- Unique compound index on `{ vendor: 1, buyer: 1 }` to enforce one rating per buyer per vendor.
 
----
+#### 5) `tags`
 
-### Browse Products with Filter
+| Field | Type | Description |
+|------|------|-------------|
+| `name` | String (unique) | Human-friendly tag name (lowercase). |
+| `slug` | String (unique) | URL-safe tag identifier. |
+| `category` | String | Optional tag category (default: general). |
+| `createdAt`, `updatedAt` | Date | Auto-managed timestamps. |
 
-```
-GET /api/products?search=usb&tags=65f4...e1,65f4...e2&page=1&limit=12
-```
+#### 6) `messages`
 
----
+| Field | Type | Description |
+|------|------|-------------|
+| `sender` | ObjectId | Sender user id. |
+| `senderModel` | String (`Buyer`/`Vendor`) | Sender role model. |
+| `recipient` | ObjectId | Recipient user id. |
+| `recipientModel` | String (`Buyer`/`Vendor`) | Recipient role model. |
+| `content` | String | Message body text. |
+| `read` | Boolean | Read/unread status. |
+| `createdAt`, `updatedAt` | Date | Auto-managed timestamps. |
 
-## MongoDB Collections
+#### 7) `orders`
 
-| Collection | Key Fields |
-|------------|-----------|
-| `vendors`  | businessName, email, password (hashed), averageRating, totalRatings |
-| `buyers`   | name, email, password (hashed) |
-| `products` | name, price, stock, vendor (ref), tags (ref[]), isAvailable |
-| `ratings`  | vendor (ref), buyer (ref), score 1-5, reliability, communication, delivery |
-| `tags`     | name, slug, category |
+| Field | Type | Description |
+|------|------|-------------|
+| `buyer` | ObjectId -> `buyers` | Buyer who placed checkout request. |
+| `items` | [Object] | Snapshot items with `product`, `vendor`, `name`, `unitPrice`, `quantity`, `lineTotal`. |
+| `totals` | Object | `subtotal`, `tax`, `shipping`, `grandTotal`. |
+| `shippingAddress` | String | Delivery location used during checkout. |
+| `payment.method` | String | One of `COD`, `MOCK_UPI`, `MOCK_CARD`. |
+| `payment.status` | String | `success` or `failed` for simulated payment. |
+| `payment.transactionId` | String | Generated mock transaction id (`mock_txn_*`). |
+| `payment.paidAt` | Date | Timestamp when mock payment succeeded. |
+| `orderStatus` | String | `placed` or `payment_failed`. |
+| `isMockPayment` | Boolean | Always `true` for dummy flow. |
+| `createdAt`, `updatedAt` | Date | Auto-managed timestamps. |
 
----
+## Current Feature Highlights
 
-## Features Summary
-
-- **Dual auth** – separate JWT flows for vendors and buyers
-- **Vendor dashboard** – add / edit / delete products with multi-tag support
-- **Product browsing** – full-text search + multi-tag filter + pagination
-- **Vendor profiles** – public page with product listings and review feed
-- **Reliability rating** – buyers rate vendors on overall score + reliability / communication / delivery dimensions
-- **One rating per buyer per vendor** – upsert enforced at DB level with a unique compound index
-- **Auto-recalculated** vendor `averageRating` after every rating submission or deletion
+- Dual user system (buyer/vendor) with JWT auth
+- Product search, filtering, and pagination
+- Buyer recommendation based on search history
+- Mock image-to-product search endpoint
+- Dummy payment checkout (no real money) with mock transaction IDs
+- Vendor trust scoring and review system
+- Basic in-app messaging between buyers and vendors

@@ -2052,3 +2052,86 @@ a:hover {
     opacity: 0.3;
   }
 }
+
+/* ===== NEW RADIO CARDS ===== */
+.radio-card-group {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-bottom: 1.5rem;
+}
+
+.radio-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.radio-card:hover {
+  border-color: var(--primary-glow);
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.radio-card.active {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+  box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.radio-card.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--primary);
+}
+
+.radio-card svg {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.radio-card:hover svg {
+  color: var(--text-main);
+}
+
+.radio-card.active svg {
+  color: var(--primary);
+}
+
+.radio-card-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+/* Specific left align mapping for addresses */
+.radio-card.address-card {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.radio-card.address-card .radio-card-label {
+  font-weight: 500;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+.radio-card.address-card.active .radio-card-label {
+  color: var(--text-main);
+}

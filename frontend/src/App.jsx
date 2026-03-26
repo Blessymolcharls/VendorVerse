@@ -11,6 +11,7 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import AboutPage from './pages/AboutPage';
 import ProfilePage from './pages/ProfilePage';
 import LandingPage from './pages/LandingPage';
+import CheckoutPage from './pages/CheckoutPage';
 
 const ProtectedRoute = ({ children, role }) => {
   const { user } = useAuth();
@@ -35,6 +36,14 @@ function AppRoutes() {
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/vendors/:id' element={<VendorProfilePage />} />
         <Route path='/products/:id' element={<ProductDetailPage />} />
+        <Route
+          path='/checkout'
+          element={
+            <ProtectedRoute role='buyer'>
+              <CheckoutPage />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path='/profile'

@@ -79,8 +79,7 @@ export default function CartSidebar() {
               className="btn btn-primary cart-checkout-btn" 
               onClick={() => {
                 closeCart();
-                // Navigate to checkout in future, for now just alert
-                alert('Proceeding to checkout...');
+                navigate('/checkout');
               }}
             >
               Checkout
