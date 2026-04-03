@@ -328,3 +328,5 @@ Indexes:
 - Vendor trust scoring and review system
 - Basic in-app messaging between buyers and vendors
 "# VendorVerse" 
+"# VendorVerse" 
+"# VendorVerse" 
