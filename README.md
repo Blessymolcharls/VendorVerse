@@ -327,3 +327,4 @@ Indexes:
 - Dummy payment checkout (no real money) with mock transaction IDs
 - Vendor trust scoring and review system
 - Basic in-app messaging between buyers and vendors
+"# VendorVerse" 
